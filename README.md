@@ -1,3 +1,10 @@
+<div style="text-align: left">
+
+[![Build Status](https://github.com/dykstrom/boxcat/actions/workflows/go.yml/badge.svg)](https://github.com/dykstrom/boxcat/actions/workflows/go.yml)
+![Top Language](https://img.shields.io/github/languages/top/dykstrom/boxcat)
+
+</div>
+
 # BoxCat
 
 Think inside the box. With cats.
