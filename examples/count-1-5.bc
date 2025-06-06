@@ -1,0 +1,15 @@
+POUNCE ON 1             # Put 1 in the Cat's Paw
+SIT IN BOX              # Store 1 in BOX, Paw is now 0
+
+LOOP_START:
+PEEK INSIDE BOX         # Paw = BOX
+MEOW                    # Output the current number
+POUNCE ON 1
+PURR AT BOX             # Paw = Paw + BOX (increment)
+SIT IN BOX              # Store incremented value back in BOX, Paw = 0
+PEEK INSIDE BOX         # Paw = BOX
+POUNCE ON 6
+HISS AT BOX             # Paw = 6 - BOX
+IF CAT CURIOUS, LEAP TO LOOP_START  # If not zero, loop again
+
+TAKE A NAP              # End program

@@ -24,26 +24,24 @@ BoxCat is a programming language inspired by the unpredictable and playful natur
 ## Example: Print the numbers 1 to 5
 
 ```text
-POUNCE ON 1         # Put 1 in the Cat's Paw
-SIT IN COUNTBOX     # Store 1 in COUNTBOX, Paw is now 0
+POUNCE ON 1             # Put 1 in the Cat's Paw
+SIT IN BOX              # Store 1 in BOX, Paw is now 0
 
 LOOP_START:
-JUMP OUT OF COUNTBOX    # Paw = COUNTBOX, COUNTBOX = 0
+PEEK INSIDE BOX         # Paw = BOX
 MEOW                    # Output the current number
 POUNCE ON 1
-PURR AT COUNTBOX        # Paw = Paw + COUNTBOX (increment)
-SIT IN COUNTBOX         # Store incremented value back in COUNTBOX, Paw = 0
-PEEK INSIDE COUNTBOX    # Paw = COUNTBOX
-POUNCE ON 5
-HISS AT COUNTBOX        # Paw = 5 - COUNTBOX
+PURR AT BOX             # Paw = Paw + BOX (increment)
+SIT IN BOX              # Store incremented value back in BOX, Paw = 0
+PEEK INSIDE BOX         # Paw = BOX
+POUNCE ON 6
+HISS AT BOX             # Paw = 6 - BOX
 IF CAT CURIOUS, LEAP TO LOOP_START  # If not zero, loop again
 
 TAKE A NAP              # End program
 ```
 
 This program prints the numbers 1 through 5, each on its own line.
-
-_Note: Does this program work? COUNTBOX will always be 0 at the start of the loop, because the cat jumps out of COUNTBOX. Better to peek inside COUNTBOX maybe?_
 
 ## Learn More
 
