@@ -27,5 +27,9 @@ func main() {
 	}
 
 	interpreter := bci.NewInterpreter(program)
-	interpreter.Run()
+	err = interpreter.Run()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }

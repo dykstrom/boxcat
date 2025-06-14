@@ -3,6 +3,7 @@ package bci
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"math/rand"
 	"os"
 	"strconv"
@@ -34,94 +35,102 @@ func NewInterpreter(program []string) *Interpreter {
 }
 
 // Preprocess: find all labels
-func (i *Interpreter) findLabels() {
+func (i *Interpreter) findLabels() error {
 	for idx, line := range i.program {
 		line = strings.TrimSpace(line)
 		if strings.HasSuffix(line, ":") {
 			label := strings.TrimSuffix(line, ":")
-			i.labels[strings.ToUpper(label)] = idx
+			label = strings.ToUpper(label)
+			if _, found := i.labels[label]; found {
+				return withNumber(idx, duplicateLabel(label))
+			}
+			i.labels[label] = idx
 		}
 	}
+	return nil
 }
 
 // Run the program
-func (i *Interpreter) Run() {
-	i.findLabels()
+func (i *Interpreter) Run() error {
+	err := i.findLabels()
+	if err != nil {
+		return err
+	}
+
 	for i.pc < len(i.program) {
 		line := i.program[i.pc]
-		i.executeLine(line)
+		err = i.executeLine(line)
+		if err != nil {
+			return withNumber(i.pc, err)
+		}
 		i.pc++
 	}
+	return nil
 }
 
-func (i *Interpreter) executeLine(line string) {
+func (i *Interpreter) executeLine(line string) error {
 	// Remove comments
 	if idx := strings.Index(line, "#"); idx != -1 {
 		line = line[:idx]
 	}
 	line = strings.TrimSpace(line)
 	if line == "" || strings.HasSuffix(line, ":") {
-		return
+		return nil
 	}
 
 	// Tokenize
-	upper := strings.ToUpper(line)
-	tokens := strings.Fields(upper)
-	if len(tokens) == 0 {
-		return
-	}
+	line = strings.ToUpper(line)
+	tokens := strings.Fields(line)
 
 	//fmt.Println("Executing:", tokens, ", Paw:", i.paw, ", Boxes:", i.boxes)
+	var err error
 	switch tokens[0] {
-	case "SIT", "SITIN":
+	case "SIT":
 		i.sitIn(getArg(tokens, 2))
-	case "JUMP", "JUMPOUTOF":
+	case "JUMP":
 		i.jumpOutOf(getArg(tokens, 3))
-	case "PEEK", "PEEKINSIDE":
+	case "PEEK":
 		i.peekInside(getArg(tokens, 2))
-	case "DROP", "DROPIN":
+	case "DROP":
 		i.dropIn(getArg(tokens, 2))
-	case "POUNCE", "POUNCEON":
+	case "POUNCE":
 		i.pounceOn(getArg(tokens, 2))
-	case "PURR", "PURRAT":
+	case "PURR":
 		i.purrAt(getArg(tokens, 2))
-	case "HISS", "HISSAT":
+	case "HISS":
 		i.hissAt(getArg(tokens, 2))
-	case "PLAYFULLY", "PLAYFULLYBAT":
+	case "PLAYFULLY":
 		i.playfullyBat(getArg(tokens, 3))
-	case "KNOCK", "KNOCKOVER":
-		i.knockOver(getArg(tokens, 2))
-	case "LEAVE", "LEAVEA":
-		i.leaveGiftIn(getArg(tokens, 5))
+	case "KNOCK":
+		err = i.knockOver(getArg(tokens, 2))
+	case "LEAVE":
+		err = i.leaveGiftIn(getArg(tokens, 5))
 	case "MEOW":
-		fmt.Println(i.paw)
+		fmt.Printf("%d ", i.paw)
 	case "YOWL":
 		fmt.Printf("%c", i.paw)
-	case "LISTEN", "LISTENFOR":
-		i.listenForWhisper()
-	case "SNIFF", "SNIFFAROUND":
-		if tokens[1] == "AROUND" {
-			i.sniffAround()
-		} else if tokens[1] == "CATNIP" {
-			i.sniffCatnip()
-		}
-	case "DART", "DARTTO":
-		i.dartTo(getArg(tokens, 2))
-	case "DARTBACK":
-		i.dartBack()
-	case "LEAP", "LEAPTO":
+	case "LISTEN":
+		err = i.listenForWhisper()
+	case "SNIFF":
+		err = i.handleSniff(getArg(tokens, 1))
+	case "DART":
+		err = i.handleDart(tokens)
+	case "LEAP":
 		i.leapTo(getArg(tokens, 2))
 	case "IF":
-		i.handleIf(line)
-	case "SUDDENLY", "SUDDENLYSCRATCH":
+		err = i.handleIf(line)
+	case "SUDDENLY":
 		i.suddenlyScratch()
 	case "DOZE":
 		i.doze()
-	case "TAKE", "TAKEANAP":
+	case "TAKE":
 		os.Exit(0)
-	case "GET", "GETSTUCK":
+	case "GET":
 		i.getStuck()
+	default:
+		err = unknownCommand(line)
 	}
+	return err
 }
 
 // Helper to get argument at position n
@@ -169,89 +178,135 @@ func (i *Interpreter) playfullyBat(box string) {
 	i.paw *= i.boxes[box]
 }
 
-func (i *Interpreter) knockOver(box string) {
+func (i *Interpreter) knockOver(box string) error {
 	if i.boxes[box] == 0 {
-		fmt.Fprintln(os.Stderr, "Angry Cat: Division by zero!")
-		os.Exit(1)
+		return divisionByZero("Division", box)
 	}
 	i.paw /= i.boxes[box]
+	return nil
 }
 
-func (i *Interpreter) leaveGiftIn(box string) {
+func (i *Interpreter) leaveGiftIn(box string) error {
 	if i.boxes[box] == 0 {
-		fmt.Fprintln(os.Stderr, "Angry Cat: Modulo by zero!")
-		os.Exit(1)
+		return divisionByZero("Modulo", box)
 	}
 	i.paw %= i.boxes[box]
+	return nil
 }
 
-func (i *Interpreter) listenForWhisper() {
+func (i *Interpreter) listenForWhisper() error {
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
-	n, _ := strconv.Atoi(strings.TrimSpace(text))
+	trimmed := strings.TrimSpace(text)
+	n, err := strconv.Atoi(trimmed)
+	if err != nil {
+		return notNumber(trimmed)
+	}
 	i.paw = n
+	return nil
 }
 
-func (i *Interpreter) sniffAround() {
+func (i *Interpreter) handleSniff(target string) error {
+	if target == "AROUND" {
+		return i.sniffAround()
+	} else if target == "CATNIP" {
+		i.sniffCatnip()
+	}
+	return nil
+}
+
+func (i *Interpreter) sniffAround() error {
 	reader := bufio.NewReader(os.Stdin)
-	ch, _, _ := reader.ReadRune()
-	i.paw = int(ch)
+	ch, _, err := reader.ReadRune()
+	if err == io.EOF {
+		i.paw = -1
+	} else if err != nil {
+		return fatalError(err)
+	} else {
+		i.paw = int(ch)
+	}
+	return nil
 }
 
 func (i *Interpreter) sniffCatnip() {
 	i.paw = i.rng.Intn(32768)
 }
 
-func (i *Interpreter) dartTo(label string) {
+func (i *Interpreter) handleDart(tokens []string) error {
+	direction := getArg(tokens, 1)
+	if direction == "TO" {
+		return i.dartTo(getArg(tokens, 2))
+	} else if direction == "BACK" {
+		return i.dartBack()
+	}
+	return nil
+}
+
+func (i *Interpreter) dartTo(label string) error {
 	i.stack = append(i.stack, i.pc)
 	if idx, ok := i.labels[label]; ok {
 		i.pc = idx
+		return nil
 	} else {
-		fmt.Fprintf(os.Stderr, "Unknown label: %s\n", label)
-		os.Exit(1)
+		return undefinedLabel(label)
 	}
 }
 
-func (i *Interpreter) dartBack() {
+func (i *Interpreter) dartBack() error {
 	if len(i.stack) == 0 {
-		fmt.Fprintln(os.Stderr, "DART BACK with empty stack!")
-		os.Exit(1)
+		return stackEmpty()
 	}
 	i.pc = i.stack[len(i.stack)-1]
 	i.stack = i.stack[:len(i.stack)-1]
+	return nil
 }
 
-func (i *Interpreter) leapTo(label string) {
+func (i *Interpreter) leapTo(label string) error {
 	if idx, ok := i.labels[label]; ok {
 		i.pc = idx
+		return nil
 	} else {
-		fmt.Fprintf(os.Stderr, "Unknown label: %s\n", label)
-		os.Exit(1)
+		return undefinedLabel(label)
 	}
 }
 
-func (i *Interpreter) handleIf(line string) {
+func (i *Interpreter) handleIf(line string) error {
 	// Example: IF CAT CURIOUS, MEOW
 	cond, rest, _ := strings.Cut(line[2:], ",")
 	cond = strings.TrimSpace(cond)
+	fields := strings.Fields(cond)
 	cmd := strings.TrimSpace(rest)
 	shouldExec := false
 
+	var err error
 	switch {
 	case strings.HasPrefix(cond, "CAT CURIOUS"):
 		shouldExec = i.paw != 0
 	case strings.HasPrefix(cond, "CAT BORED"):
 		shouldExec = i.paw == 0
 	case strings.HasPrefix(cond, "BOX EMPTY"):
-		box := strings.Fields(cond)[2]
-		shouldExec = i.boxes[box] == 0
+		if len(fields) < 3 {
+			err = missingBoxPonder(line)
+		} else {
+			shouldExec = i.boxes[fields[2]] == 0
+		}
 	case strings.HasPrefix(cond, "BOX NOT EMPTY"):
-		box := strings.Fields(cond)[3]
-		shouldExec = i.boxes[box] != 0
+		if len(fields) < 4 {
+			err = missingBoxPonder(line)
+		} else {
+			shouldExec = i.boxes[fields[3]] != 0
+		}
+	default:
+		err = unknownCommand(line)
 	}
-	if shouldExec && cmd != "" {
-		i.executeLine(cmd)
+	if err != nil {
+		return err
+	} else if cmd == "" {
+		err = missingCommand(line)
+	} else if shouldExec {
+		err = i.executeLine(cmd)
 	}
+	return err
 }
 
 func (i *Interpreter) suddenlyScratch() {
@@ -267,4 +322,62 @@ func (i *Interpreter) doze() {
 func (i *Interpreter) getStuck() {
 	for {
 	}
+}
+
+func unknownCommand(text string) error {
+	return fmt.Errorf(
+		"Hiss! The line '%s' caused the cat to arch its back. Syntax unclear, human servant!", text,
+	)
+}
+
+func missingCommand(text string) error {
+	return fmt.Errorf(
+		"Hiss! The line '%s' is missing a command. Cat looks at you expectantly.", text,
+	)
+}
+
+func missingBoxPonder(text string) error {
+	return fmt.Errorf(
+		"The command '%s' needs a box name to ponder on! Cat is pacing, waiting for specifics.", text,
+	)
+}
+
+func duplicateLabel(label string) error {
+	return fmt.Errorf(
+		"Two '%s's? Cat is torn! Like choosing between the salmon-flavored treats and the chicken-flavored ones. Make up your mind, human!", label,
+	)
+}
+
+func undefinedLabel(label string) error {
+	return fmt.Errorf(
+		"Lost kitty! '%s' is nowhere to be found. Cat is now sitting in the middle of the program, looking confused.", label,
+	)
+}
+
+func stackEmpty() error {
+	return fmt.Errorf(
+		"Cat is looking for somewhere to dart back, but found nothing. Stack is empty.",
+	)
+}
+
+func divisionByZero(operation, box string) error {
+	return fmt.Errorf(
+		"'%s' is as empty as a treat jar after a midnight raid! %s by zero attempted. Cat just blinked slowly.", box, operation,
+	)
+}
+
+func notNumber(text string) error {
+	return fmt.Errorf(
+		"The human whispered '%s'. Cat blinked. That's not a number it recognizes.", text,
+	)
+}
+
+func fatalError(err error) error {
+	return fmt.Errorf(
+		"Fatal: The catnip may have been too strong. Unfathomable error '%v'. Cat needs a system reboot (and maybe a snack).", err,
+	)
+}
+
+func withNumber(num int, err error) error {
+	return fmt.Errorf("Error on line %d: %v", num+1, err)
 }

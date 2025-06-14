@@ -38,10 +38,12 @@ POUNCE ON 6
 HISS AT BOX             # Paw = 6 - BOX
 IF CAT CURIOUS, LEAP TO LOOP_START  # If not zero, loop again
 
+POUNCE ON 10            # Output a newline
+YOWL
 TAKE A NAP              # End program
 ```
 
-This program prints the numbers 1 through 5, each on its own line.
+This program prints the numbers 1 through 5.
 
 ## Learn More
 

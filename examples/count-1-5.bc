@@ -1,3 +1,5 @@
+# Count from 1 to 5
+
 POUNCE ON 1             # Put 1 in the Cat's Paw
 SIT IN BOX              # Store 1 in BOX, Paw is now 0
 
@@ -12,4 +14,6 @@ POUNCE ON 6
 HISS AT BOX             # Paw = 6 - BOX
 IF CAT CURIOUS, LEAP TO LOOP_START  # If not zero, loop again
 
+POUNCE ON 10            # Output a newline
+YOWL
 TAKE A NAP              # End program

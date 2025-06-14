@@ -63,7 +63,7 @@ The program state is represented by a collection of cardboard boxes and a single
 ### Input/Output
 
 - `MEOW`
-  - Outputs the integer value currently in the Cat's Paw to standard output, followed by a newline.
+  - Outputs the integer value currently in the Cat's Paw to standard output, followed by a blank character.
 - `YOWL`
   - Outputs the ASCII character corresponding to the integer value in the Cat's Paw to standard output (no automatic newline). If the value is outside the printable ASCII range, behavior is implementation-defined (e.g., output nothing, output a '?', or output the character if the system supports it).
 - `LISTEN FOR WHISPER`
