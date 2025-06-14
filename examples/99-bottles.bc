@@ -1,0 +1,244 @@
+# Print the lyrics of the song "99 Bottles of Beer"
+
+POUNCE ON 1                       # Save the value 1 in box ONE
+SIT IN ONE
+
+POUNCE ON 99                      # Number of verses left
+
+LOOP:
+  IF CAT BORED, LEAP TO END
+  DROP IN COUNT
+  DART TO PRINT
+  JUMP OUT OF COUNT               # Count down with one
+  HISS AT ONE
+  LEAP TO LOOP
+
+# A subroutine that prints one verse of the song.
+PRINT:
+  PEEK IN COUNT
+  DART TO PRINT_BOTTLES_OF_BEER
+
+  POUNCE ON 32                    # SPACE
+  YOWL
+
+  DART TO PRINT_ON_THE_WALL
+
+  POUNCE ON 44                    # ,
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+
+  PEEK IN COUNT
+  DART TO PRINT_BOTTLES_OF_BEER
+
+  POUNCE ON 46                    # .
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 10                    # NEWLINE
+  YOWL
+
+  POUNCE ON 84                    # T
+  YOWL
+  POUNCE ON 97                    # a
+  YOWL
+  POUNCE ON 107                   # k
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 100                   # d
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 119                   # w
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 97                    # a
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 100                   # d
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 112                   # p
+  YOWL
+  POUNCE ON 97                    # a
+  YOWL
+  POUNCE ON 115                   # s
+  YOWL
+  POUNCE ON 115                   # s
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 105                   # i
+  YOWL
+  POUNCE ON 116                   # t
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 97                    # a
+  YOWL
+  POUNCE ON 114                   # r
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 117                   # u
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 100                   # d
+  YOWL
+  POUNCE ON 44                    # ,
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 119                   # w
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 116                   # t
+  YOWL
+  POUNCE ON 104                   # h
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 114                   # r
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 39                    # '
+  YOWL
+  POUNCE ON 115                   # s
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+
+  PEEK IN COUNT
+  HISS AT ONE
+  DART TO PRINT_BOTTLES_OF_BEER
+
+  POUNCE ON 32                    # SPACE
+  YOWL
+
+  DART TO PRINT_ON_THE_WALL
+
+  POUNCE ON 33                    # !
+  YOWL
+  POUNCE ON 10                    # NEWLINE
+  YOWL
+  YOWL
+
+  DART BACK
+
+# A subroutine that prints "X bottles of beer", where X is the value in the Cat's Paw.
+PRINT_BOTTLES_OF_BEER:
+  DROP IN TEMP                    # Save Paw value in TEMP
+
+  # If value in Paw != 0, print the value. Otherwise, print "no more ".
+  IF CAT CURIOUS, MEOW
+  IF CAT BORED, DART TO PRINT_NO_MORE
+
+  POUNCE ON 98                    # b
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 116                   # t
+  YOWL
+  YOWL
+  POUNCE ON 108                   # l
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+
+  # If the number of bottles (in TEMP) is 1, skip printing the plural "s"
+  PEEK IN TEMP
+  HISS AT ONE
+  IF CAT BORED, LEAP TO SKIP_S
+  POUNCE ON 115                   # s
+  YOWL
+
+SKIP_S:
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 102                   # f
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 98                    # b
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  YOWL
+  POUNCE ON 114                   # r
+  YOWL
+
+  DART BACK
+
+# A subroutine that prints "no more".
+PRINT_NO_MORE:
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 109                   # n
+  YOWL
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 114                   # r
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+
+  DART BACK
+
+# A subroutine that prints "on the wall".
+PRINT_ON_THE_WALL:
+  POUNCE ON 111                   # o
+  YOWL
+  POUNCE ON 110                   # n
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 116                   # t
+  YOWL
+  POUNCE ON 104                   # h
+  YOWL
+  POUNCE ON 101                   # e
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 119                   # w
+  YOWL
+  POUNCE ON 97                    # a
+  YOWL
+  POUNCE ON 108                   # l
+  YOWL
+  YOWL
+  DART BACK
+
+END:
+  TAKE A NAP

@@ -1,0 +1,21 @@
+# Echo characters to stdout
+
+LOOP:
+
+SNIFF AROUND                   # Read a character and save it in INPUT_BOX
+SIT IN INPUT_BOX
+
+POUNCE ON -1                   # Compare value with -1 (EOF) and if equal goto END
+HISS AT INPUT_BOX
+IF CAT BORED, LEAP TO END
+
+PEEK IN INPUT_BOX              # Print the character followed by a newline
+YOWL
+POUNCE ON 10
+YOWL
+
+LEAP TO LOOP                   # Loop and read another character
+
+END:
+
+TAKE A NAP                     # End program
