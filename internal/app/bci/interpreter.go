@@ -20,6 +20,7 @@ type Interpreter struct {
 	labels  map[string]int
 	program []string
 	rng     *rand.Rand
+	writer  io.StringWriter
 }
 
 func NewInterpreter(program []string) *Interpreter {
@@ -31,7 +32,14 @@ func NewInterpreter(program []string) *Interpreter {
 		labels:  make(map[string]int),
 		program: program,
 		rng:     rand.New(rand.NewSource(time.Now().UnixNano())),
+		writer:  os.Stdout,
 	}
+}
+
+func NewInterpreterWithIO(program []string, writer io.StringWriter) *Interpreter {
+	i := NewInterpreter(program)
+	i.writer = writer
+	return i
 }
 
 // Preprocess: find all labels
@@ -106,9 +114,9 @@ func (i *Interpreter) executeLine(line string) error {
 	case "LEAVE":
 		err = i.leaveGiftIn(getArg(tokens, 5))
 	case "MEOW":
-		fmt.Printf("%d ", i.paw)
+		i.writer.WriteString(fmt.Sprintf("%d ", i.paw))
 	case "YOWL":
-		fmt.Printf("%c", i.paw)
+		i.writer.WriteString(fmt.Sprintf("%c", i.paw))
 	case "LISTEN":
 		err = i.listenForWhisper()
 	case "SNIFF":
