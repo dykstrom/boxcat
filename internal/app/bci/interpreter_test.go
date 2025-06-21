@@ -26,6 +26,16 @@ func TestInterpreter(t *testing.T) {
 				"A",
 			},
 		},
+		{
+			name: "Character to ASCII code",
+			input: []string{
+				"pounce on 'a'",
+				"meow",
+			},
+			output: []string{
+				"97 ",
+			},
+		},
 	}
 
 	executeTests(t, testCases)

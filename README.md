@@ -1,7 +1,9 @@
 <div style="text-align: left">
 
 [![Build Status](https://github.com/dykstrom/boxcat/actions/workflows/go.yml/badge.svg)](https://github.com/dykstrom/boxcat/actions/workflows/go.yml)
+[![Latest Release](https://img.shields.io/github/v/release/dykstrom/boxcat?display_name=release)](https://github.com/dykstrom/boxcat/releases)
 ![Top Language](https://img.shields.io/github/languages/top/dykstrom/boxcat)
+![License](https://img.shields.io/github/license/dykstrom/boxcat)
 
 </div>
 
@@ -48,3 +50,9 @@ This program prints the numbers 1 through 5.
 ## Learn More
 
 See the [language specification](specification.md) for the full list of commands.
+
+## Reference Implementation
+
+This repository contains the **reference implementation** of the BoxCat programming language. The official interpreter, called **bci** (BoxCat Interpreter), is written in Go and serves as the authoritative source for BoxCat language behavior and features.
+
+If you want to experiment with BoxCat, contribute, or build your own interpreter, this is the place to start!

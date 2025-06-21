@@ -1,29 +1,29 @@
 # Print Hello, world!
 
-Pounce on 72      # H
+Pounce on 'H'
 Yowl
-Pounce on 101     # e
+Pounce on 'e'
 Yowl
-Pounce on 108     # l
+Pounce on 'l'
 Yowl
 Yowl
-Pounce on 111     # o
+Pounce on 'o'
 Yowl
-Pounce on 44      # ,
+Pounce on ','
 Yowl
 Pounce on 32      # SPACE
 Yowl
-Pounce on 119     # w
+Pounce on 'w'
 Yowl
-Pounce on 111     # o
+Pounce on 'o'
 Yowl
-Pounce on 114     # r
+Pounce on 'r'
 Yowl
-Pounce on 108     # l
+Pounce on 'l'
 Yowl
-Pounce on 100     # d
+Pounce on 'd'
 Yowl
-Pounce on 33      # !
+Pounce on '!'
 Yowl
 Pounce on 10      # EOL
 Yowl

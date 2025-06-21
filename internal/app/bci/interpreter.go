@@ -6,6 +6,7 @@ import (
 	"io"
 	"math/rand"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -87,8 +88,8 @@ func (i *Interpreter) executeLine(line string) error {
 	}
 
 	// Tokenize
-	line = strings.ToUpper(line)
-	tokens := strings.Fields(line)
+	upper := strings.ToUpper(line)
+	tokens := strings.Fields(upper)
 
 	//fmt.Println("Executing:", tokens, ", Paw:", i.paw, ", Boxes:", i.boxes)
 	var err error
@@ -102,7 +103,7 @@ func (i *Interpreter) executeLine(line string) error {
 	case "DROP":
 		i.dropIn(getArg(tokens, 2))
 	case "POUNCE":
-		i.pounceOn(getArg(tokens, 2))
+		err = i.pounceOn(line)
 	case "PURR":
 		i.purrAt(getArg(tokens, 2))
 	case "HISS":
@@ -126,7 +127,7 @@ func (i *Interpreter) executeLine(line string) error {
 	case "LEAP":
 		i.leapTo(getArg(tokens, 2))
 	case "IF":
-		err = i.handleIf(line)
+		err = i.handleIf(upper)
 	case "SUDDENLY":
 		i.suddenlyScratch()
 	case "DOZE":
@@ -136,7 +137,7 @@ func (i *Interpreter) executeLine(line string) error {
 	case "GET":
 		i.getStuck()
 	default:
-		err = unknownCommand(line)
+		err = unknownCommand(upper)
 	}
 	return err
 }
@@ -169,9 +170,20 @@ func (i *Interpreter) dropIn(box string) {
 	i.boxes[box] = i.paw
 }
 
-func (i *Interpreter) pounceOn(val string) {
-	n, _ := strconv.Atoi(val)
-	i.paw = n
+func (i *Interpreter) pounceOn(line string) error {
+	val := getArg(strings.Fields(line), 2)
+
+	n, err := strconv.Atoi(val)
+	if err == nil {
+		i.paw = n
+		return nil
+	}
+	matched, _ := regexp.MatchString("'\\S'", val)
+	if matched {
+		i.paw = int(val[1])
+		return nil
+	}
+	return pounceError(val)
 }
 
 func (i *Interpreter) purrAt(box string) {
@@ -380,9 +392,15 @@ func notNumber(text string) error {
 	)
 }
 
+func pounceError(text string) error {
+	return fmt.Errorf(
+		"Cat tried to pounce on '%s' but missed. Cat is embarassed. That's not a number or character.", text,
+	)
+}
+
 func fatalError(err error) error {
 	return fmt.Errorf(
-		"Fatal: The catnip may have been too strong. Unfathomable error '%v'. Cat needs a system reboot (and maybe a snack).", err,
+		"The catnip may have been too strong. Unfathomable error '%v'. Cat needs a system reboot (and maybe a snack).", err,
 	)
 }
 

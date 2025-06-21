@@ -3,7 +3,7 @@
 POUNCE ON 1                       # Save the value 1 in box ONE
 SIT IN ONE
 
-POUNCE ON 99                      # Number of verses left
+POUNCE ON 99                      # Number of verses
 
 LOOP:
   IF CAT BORED, LEAP TO END
@@ -13,7 +13,10 @@ LOOP:
   HISS AT ONE
   LEAP TO LOOP
 
+# --------------------------------------------------------
 # A subroutine that prints one verse of the song.
+# Expects the number of bottles left in box COUNT.
+# --------------------------------------------------------
 PRINT:
   PEEK IN COUNT
   DART TO PRINT_BOTTLES_OF_BEER
@@ -23,7 +26,7 @@ PRINT:
 
   DART TO PRINT_ON_THE_WALL
 
-  POUNCE ON 44                    # ,
+  POUNCE ON ','
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
@@ -31,102 +34,101 @@ PRINT:
   PEEK IN COUNT
   DART TO PRINT_BOTTLES_OF_BEER
 
-  POUNCE ON 46                    # .
+  POUNCE ON '.'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
   POUNCE ON 10                    # NEWLINE
   YOWL
 
-  POUNCE ON 84                    # T
+  POUNCE ON 'T'
   YOWL
-  POUNCE ON 97                    # a
+  POUNCE ON 'a'
   YOWL
-  POUNCE ON 107                   # k
+  POUNCE ON 'k'
   YOWL
-  POUNCE ON 101                   # e
-  YOWL
-  POUNCE ON 32                    # SPACE
-  YOWL
-  POUNCE ON 111                   # o
-  YOWL
-  POUNCE ON 110                   # n
-  YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'e'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 100                   # d
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'n'
   YOWL
-  POUNCE ON 119                   # w
-  YOWL
-  POUNCE ON 110                   # n
+  POUNCE ON 'e'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 97                    # a
+  POUNCE ON 'd'
   YOWL
-  POUNCE ON 110                   # n
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 100                   # d
+  POUNCE ON 'w'
   YOWL
-  POUNCE ON 32                    # SPACE
-  YOWL
-  POUNCE ON 112                   # p
-  YOWL
-  POUNCE ON 97                    # a
-  YOWL
-  POUNCE ON 115                   # s
-  YOWL
-  POUNCE ON 115                   # s
+  POUNCE ON 'n'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 105                   # i
+  POUNCE ON 'a'
   YOWL
-  POUNCE ON 116                   # t
+  POUNCE ON 'n'
   YOWL
-  POUNCE ON 32                    # SPACE
-  YOWL
-  POUNCE ON 97                    # a
-  YOWL
-  POUNCE ON 114                   # r
-  YOWL
-  POUNCE ON 111                   # o
-  YOWL
-  POUNCE ON 117                   # u
-  YOWL
-  POUNCE ON 110                   # n
-  YOWL
-  POUNCE ON 100                   # d
-  YOWL
-  POUNCE ON 44                    # ,
+  POUNCE ON 'd'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 110                   # n
+  POUNCE ON 'p'
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'a'
   YOWL
-  POUNCE ON 119                   # w
+  POUNCE ON 's'
+  YOWL
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 116                   # t
+  POUNCE ON 'i'
   YOWL
-  POUNCE ON 104                   # h
+  POUNCE ON 't'
   YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 114                   # r
+  POUNCE ON 'a'
   YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'r'
+  YOWL
+  POUNCE ON 'o'
+  YOWL
+  POUNCE ON 'u'
+  YOWL
+  POUNCE ON 'n'
+  YOWL
+  POUNCE ON 'n'
+  YOWL
+  POUNCE ON ','
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 'n'
+  YOWL
+  POUNCE ON 'o'
+  YOWL
+  POUNCE ON 'w'
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 't'
+  YOWL
+  POUNCE ON 'h'
+  YOWL
+  POUNCE ON 'e'
+  YOWL
+  POUNCE ON 'r'
+  YOWL
+  POUNCE ON 'e'
   YOWL
   POUNCE ON 39                    # '
   YOWL
-  POUNCE ON 115                   # s
+  POUNCE ON 's'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
@@ -140,7 +142,7 @@ PRINT:
 
   DART TO PRINT_ON_THE_WALL
 
-  POUNCE ON 33                    # !
+  POUNCE ON '!'
   YOWL
   POUNCE ON 10                    # NEWLINE
   YOWL
@@ -148,7 +150,10 @@ PRINT:
 
   DART BACK
 
-# A subroutine that prints "X bottles of beer", where X is the value in the Cat's Paw.
+# --------------------------------------------------------
+# A subroutine that prints "X bottles of beer", 
+# where X is the value in the Cat's Paw.
+# --------------------------------------------------------
 PRINT_BOTTLES_OF_BEER:
   DROP IN TEMP                    # Save Paw value in TEMP
 
@@ -156,86 +161,90 @@ PRINT_BOTTLES_OF_BEER:
   IF CAT CURIOUS, MEOW
   IF CAT BORED, DART TO PRINT_NO_MORE
 
-  POUNCE ON 98                    # b
+  POUNCE ON 'b'
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 116                   # t
+  POUNCE ON 't'
   YOWL
   YOWL
-  POUNCE ON 108                   # l
+  POUNCE ON 'l'
   YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'e'
   YOWL
 
   # If the number of bottles (in TEMP) is 1, skip printing the plural "s"
   PEEK IN TEMP
   HISS AT ONE
   IF CAT BORED, LEAP TO SKIP_S
-  POUNCE ON 115                   # s
+  POUNCE ON 's'
   YOWL
 
 SKIP_S:
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 102                   # f
+  POUNCE ON 'f'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 98                    # b
+  POUNCE ON 'b'
   YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'e'
   YOWL
   YOWL
-  POUNCE ON 114                   # r
+  POUNCE ON 'r'
   YOWL
 
   DART BACK
 
-# A subroutine that prints "no more".
+# --------------------------------------------------------
+# A subroutine that prints "no more ".
+# --------------------------------------------------------
 PRINT_NO_MORE:
-  POUNCE ON 110                   # n
+  POUNCE ON 'n'
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'o'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 109                   # n
+  POUNCE ON 'n'
   YOWL
-  POUNCE ON 111                   # o
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 114                   # r
+  POUNCE ON 'r'
   YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'e'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
 
   DART BACK
 
+# --------------------------------------------------------
 # A subroutine that prints "on the wall".
+# --------------------------------------------------------
 PRINT_ON_THE_WALL:
-  POUNCE ON 111                   # o
+  POUNCE ON 'o'
   YOWL
-  POUNCE ON 110                   # n
-  YOWL
-  POUNCE ON 32                    # SPACE
-  YOWL
-  POUNCE ON 116                   # t
-  YOWL
-  POUNCE ON 104                   # h
-  YOWL
-  POUNCE ON 101                   # e
+  POUNCE ON 'n'
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 119                   # w
+  POUNCE ON 't'
   YOWL
-  POUNCE ON 97                    # a
+  POUNCE ON 'h'
   YOWL
-  POUNCE ON 108                   # l
+  POUNCE ON 'e'
+  YOWL
+  POUNCE ON 32                    # SPACE
+  YOWL
+  POUNCE ON 'w'
+  YOWL
+  POUNCE ON 'a'
+  YOWL
+  POUNCE ON 'l'
   YOWL
   YOWL
   DART BACK

@@ -41,7 +41,8 @@ The program state is represented by a collection of cardboard boxes and a single
 ### Cat Actions (Data Manipulation - Acts on Paw and Box)
 
 - `POUNCE ON [VALUE]`
-  - Loads a literal integer `[VALUE]` directly into the Cat's Paw, overwriting its current contents.
+  - `[VALUE]` may be an integer or a single ASCII character enclosed in `'` characters.
+  - Loads the literal integer `[VALUE]` or the ASCII code of the character directly into the Cat's Paw, overwriting its current contents.
 - `PURR AT [BOX_NAME]`
   - Adds the value in `[BOX_NAME]` to the value in the Cat's Paw. The result is stored in the Cat's Paw.
   - `[BOX_NAME]`'s content is unchanged.
