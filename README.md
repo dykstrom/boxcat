@@ -1,6 +1,6 @@
 <div style="text-align: left">
 
-[![Build Status](https://github.com/dykstrom/boxcat/actions/workflows/go.yml/badge.svg)](https://github.com/dykstrom/boxcat/actions/workflows/go.yml)
+[![Build Status](https://github.com/dykstrom/boxcat/actions/workflows/build.yml/badge.svg)](https://github.com/dykstrom/boxcat/actions/workflows/build.yml)
 [![Latest Release](https://img.shields.io/github/v/release/dykstrom/boxcat?display_name=release)](https://github.com/dykstrom/boxcat/releases)
 ![Top Language](https://img.shields.io/github/languages/top/dykstrom/boxcat)
 ![License](https://img.shields.io/github/license/dykstrom/boxcat)
