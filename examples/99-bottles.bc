@@ -102,7 +102,7 @@ PRINT:
   YOWL
   POUNCE ON 'n'
   YOWL
-  POUNCE ON 'n'
+  POUNCE ON 'd'
   YOWL
   POUNCE ON ','
   YOWL
@@ -209,7 +209,7 @@ PRINT_NO_MORE:
   YOWL
   POUNCE ON 32                    # SPACE
   YOWL
-  POUNCE ON 'n'
+  POUNCE ON 'm'
   YOWL
   POUNCE ON 'o'
   YOWL
